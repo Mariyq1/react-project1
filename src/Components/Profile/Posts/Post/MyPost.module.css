@@ -1,6 +1,8 @@
 .item {
     color: green;
+    padding: 10px;
 }
 .item img {
     width: 50px;
+    border-radius: 150px;
 }

@@ -1,19 +1,19 @@
 import React from "react";
 import MyPost from "./Post/MyPost";
+import classes from "./MyPosts.module.css";
 
 
-export default function MyPosts(){
-    return <div className="MyPosts">
-        My Posts 
-        <div>
-            New Post
+export default function MyPosts(props){
+    let myPostsElement = props.postData
+    .map(d=> <MyPost name={d.message} counts={d.counts}/>);
+    return <div className={classes.postsBox}>
+         <div>
+            <h3>My Posts</h3> 
         </div>
-        <MyPost  message= "Hi, how are you?" counts='14'/>
-        <MyPost message= "I am very good!" counts='1'/>
-        <MyPost message= "What are you doing?" counts='15'/>
-
-
-         
-        
+            <form>
+                <input type="search" placeholder="Type your post"/>
+                <input type="submit"/>
+            </form>
+        {myPostsElement}        
     </div>
 }

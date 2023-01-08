@@ -4,10 +4,26 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+
+let postData= [
+        {message: 'Hi, how are you?', counts:14},
+        {message: 'I am very good!', counts:1}
+    ]
+let dialogs = [
+        {id: 1, name: "Mariya"},
+        {id: 2, name:"Yurii"}
+    ]
+let messages = [
+        {id: 1, message: "Hello, how are you"},
+        {id:2, message:"I am very good and you"},
+        {id:3, message:"OK"}
+    ]
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
+  
   <React.StrictMode>
-    <App />
+    <App postData={postData} dialogs={dialogs} messages={messages}/>
   </React.StrictMode>
 );
 
