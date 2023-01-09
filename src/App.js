@@ -6,20 +6,19 @@ import Dialogs from './Components/Dialogs/Dialogs';
 import News from "./Components/News/News";
 import Music from "./Components/Music/Music";
 import Settings from "./Components/Settings/Settings";
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 
 function App(props) {
   
   return (
-    <BrowserRouter>
+    
     <div className="App">
       <Header/>
       <Navbar/>
       <div className="App-content">
         <Routes>
-          <Route path="/profile" element={<Profile postData={props.postData}/>}/>
-          <Route path="/dialogs" element={<Dialogs dialogs={props.dialogs}
-          messages={props.messages}/>}/>
+          <Route path="/profile" element={<Profile state={props.state.profilePage}/>}/>
+          <Route path="/dialogs" element={<Dialogs state={props.state.messagesPage}/>}/>
           <Route path="/news" element={<News/>}/>
           <Route path="/music" element={<Music/>}/>
           <Route path="/settings" element={<Settings/>}/>
@@ -28,7 +27,7 @@ function App(props) {
       </div>
       
     </div>
-    </BrowserRouter>
+    
   );
 }
 
