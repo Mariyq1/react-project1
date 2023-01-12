@@ -10,14 +10,22 @@ export default function Dialogs(props){
     .map (d => <DialogItem name={d.name} id={d.id}/>);
     let messagesElements = props.state.messages
     .map (m => <Messages message={m.message} id={m.id}/>)
-    function addMessage(){
-        let message = newMessageElement.current.value;
-        alert(message);
+    
+      let addMessage = ()=> {
+       props.addMessage();
     }
+    
     let newMessageElement = React.createRef();
+
+    let onMessageChange = () =>{
+        let message = newMessageElement.current.value;
+        props.updateNewMessage(message);
+    }
+   
    return <div className={classes.Dialogs}>
     <div>
-        <textarea ref={newMessageElement}></textarea>
+        <textarea ref={newMessageElement}
+        onChange={onMessageChange}></textarea>
     </div>
     <div>
         <button onClick={addMessage}>Add</button>
