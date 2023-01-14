@@ -9,8 +9,8 @@ export default function Profile(props){
         <ProfileInfo/>
         <MyPosts 
         posts={props.profilePage.posts}
-        addPost={props.addPost}
+        dispatch={props.dispatch}
         newPostText={props.profilePage.newPostText}
-        updateNewPostText={props.updateNewPostText}/>
+        />
     </div>
 }

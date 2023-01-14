@@ -12,14 +12,14 @@ export default function Dialogs(props){
     .map (m => <Messages message={m.message} id={m.id}/>)
     
       let addMessage = ()=> {
-       props.addMessage();
+       props.dispatch({type:"ADD-MESSAGE"});
     }
     
     let newMessageElement = React.createRef();
 
     let onMessageChange = () =>{
         let message = newMessageElement.current.value;
-        props.updateNewMessage(message);
+        props.dispatch({type: "UPDATE-NEW-MESSAGE" , newMessage: message});
     }
    
    return <div className={classes.Dialogs}>
