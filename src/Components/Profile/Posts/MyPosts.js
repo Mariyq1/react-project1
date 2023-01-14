@@ -1,17 +1,17 @@
 import React from "react";
 import MyPost from "./Post/MyPost";
 import classes from "./MyPosts.module.css";
-
+import {addPostActionCreator,updateNewPostTextActionCreator} from "../../../red/state"
     export default function MyPosts (props){
     let myPostsElement = props.posts.map(p=> <MyPost name={p.message} counts={p.counts}/>);
 
     let newPostElement = React.createRef();
     let addPost= () =>{
-        props.dispatch({type:"ADD-POST"});
+        props.dispatch(addPostActionCreator());
     }
     let OnPostChange = () => {
         let text = newPostElement.current.value;
-        props.dispatch({type: "UPDATE-NEW-POST-TEXT", newText: text});
+        props.dispatch(updateNewPostTextActionCreator(text));
     }
     return <div className={classes.postsBox}>
          <div>

@@ -2,8 +2,7 @@ import React from "react";
 import classes from "./Dialogs.module.css";
 import DialogItem from "./DialogItem/DialogItem";
 import Messages from "./Messages/Messages";
-
-
+import {addMessageActionCreator, updateNewMessageActionCreator} from "../../red/state"
 
 export default function Dialogs(props){
     let dialogsElements = props.state.dialogs
@@ -12,14 +11,14 @@ export default function Dialogs(props){
     .map (m => <Messages message={m.message} id={m.id}/>)
     
       let addMessage = ()=> {
-       props.dispatch({type:"ADD-MESSAGE"});
+       props.dispatch(addMessageActionCreator());
     }
     
     let newMessageElement = React.createRef();
 
     let onMessageChange = () =>{
         let message = newMessageElement.current.value;
-        props.dispatch({type: "UPDATE-NEW-MESSAGE" , newMessage: message});
+        props.dispatch(updateNewMessageActionCreator(message));
     }
    
    return <div className={classes.Dialogs}>
