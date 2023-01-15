@@ -2,7 +2,7 @@ import React from "react";
 import classes from "./Dialogs.module.css";
 import DialogItem from "./DialogItem/DialogItem";
 import Messages from "./Messages/Messages";
-import {addMessageActionCreator, updateNewMessageActionCreator} from "../../red/state"
+import {addMessageActionCreator, updateNewMessageActionCreator} from "../../red/messages-reducer"
 
 export default function Dialogs(props){
     let dialogsElements = props.state.dialogs

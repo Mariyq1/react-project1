@@ -1,7 +1,7 @@
 import React from "react";
 import MyPost from "./Post/MyPost";
 import classes from "./MyPosts.module.css";
-import {addPostActionCreator,updateNewPostTextActionCreator} from "../../../red/state"
+import {addPostActionCreator,updateNewPostTextActionCreator} from "../../../red/profile-reducer"
     export default function MyPosts (props){
     let myPostsElement = props.posts.map(p=> <MyPost name={p.message} counts={p.counts}/>);
 
