@@ -22,20 +22,19 @@ export default function Dialogs(props){
     }
    
    return <div className={classes.Dialogs}>
-    <div>
+    <div className={classes.dialogItems}>
+       {dialogsElements}
+       </div>
+       <div className={classes.Messages}>
+        <div>{messagesElements}
+       <div>
         <textarea ref={newMessageElement}
         onChange={onMessageChange}></textarea>
     </div>
     <div>
         <button onClick={addMessage}>Add</button>
     </div>
-    <Messages/>
-    <DialogItem/> 
-       <div className={classes.dialogItems}>
-       {dialogsElements}
-       </div>
-       <div className={classes.Messages}>
-        {messagesElements}
-       </div>
+    </div>
+    </div>
     </div>
 }
