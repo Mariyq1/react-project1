@@ -1,17 +1,17 @@
 import React from "react";
 import MyPost from "./Post/MyPost";
 import classes from "./MyPosts.module.css";
-import {addPostActionCreator,updateNewPostTextActionCreator} from "../../../red/profile-reducer"
+    
     export default function MyPosts (props){
     let myPostsElement = props.posts.map(p=> <MyPost name={p.message} counts={p.counts}/>);
 
     let newPostElement = React.createRef();
-    let addPost= () =>{
-        props.dispatch(addPostActionCreator());
+    let onAddPost= () =>{
+        props.onAddPost();
     }
-    let OnPostChange = () => {
+    let onPostChange = () => {
         let text = newPostElement.current.value;
-        props.dispatch(updateNewPostTextActionCreator(text));
+        props.onPostChange(text);
     }
     return <div className={classes.postsBox}>
          <div>
@@ -19,13 +19,13 @@ import {addPostActionCreator,updateNewPostTextActionCreator} from "../../../red/
         </div>
         <div>
             <textarea 
-            onChange={OnPostChange}
+            onChange={onPostChange}
             ref={newPostElement}
             value={props.NewPostText}
             />
             </div>
             <div>
-                <button onClick={addPost}>Add Post</button>
+                <button onClick={onAddPost}>Add Post</button>
             </div>
         {myPostsElement}        
     </div>

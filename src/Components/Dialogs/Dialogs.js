@@ -2,23 +2,20 @@ import React from "react";
 import classes from "./Dialogs.module.css";
 import DialogItem from "./DialogItem/DialogItem";
 import Messages from "./Messages/Messages";
-import {addMessageActionCreator, updateNewMessageActionCreator} from "../../red/messages-reducer"
 
 export default function Dialogs(props){
-    let dialogsElements = props.state.dialogs
-    .map (d => <DialogItem name={d.name} id={d.id}/>);
-    let messagesElements = props.state.messages
-    .map (m => <Messages message={m.message} id={m.id}/>)
-    
+    let state = props.messagesPage;
+    let dialogsElements = state.dialogs.map (d => <DialogItem name={d.name} id={d.id}/>);
+    let messagesElements = state.messages.map (m => <Messages message={m.message} id={m.id}/>)
+    let newMessageText = React.createRef();;
       let addMessage = ()=> {
-       props.dispatch(addMessageActionCreator());
+       props.sendMessage();
     }
     
-    let newMessageElement = React.createRef();
 
     let onMessageChange = () =>{
-        let message = newMessageElement.current.value;
-        props.dispatch(updateNewMessageActionCreator(message));
+        let message = newMessageText.current.value;
+        props.updateNewMessageText(message);
     }
    
    return <div className={classes.Dialogs}>
@@ -28,7 +25,7 @@ export default function Dialogs(props){
        <div className={classes.Messages}>
         <div>{messagesElements}
        <div>
-        <textarea ref={newMessageElement}
+        <textarea ref={newMessageText}
         onChange={onMessageChange}></textarea>
     </div>
     <div>

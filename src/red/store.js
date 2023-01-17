@@ -21,7 +21,7 @@ let store = {
         {id:2, message:"I am very good and you"},
         {id:3, message:"OK"}
     ],
-        newMessageText: "What is your name"
+        newMessageText: ""
     },
     sidebar: {}
 },
