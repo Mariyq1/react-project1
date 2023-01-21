@@ -8,7 +8,7 @@ import Settings from "./Components/Settings/Settings";
 import DialogsContainer from './Components/Dialogs/DialogsContainer';
 import { Routes, Route, BrowserRouter } from 'react-router-dom';
 
-function App(props) {
+function App() {
   
   return (
     <BrowserRouter>
@@ -17,12 +17,8 @@ function App(props) {
       <Navbar/>
      <div className="App-content">
         <Routes>
-         <Route path="/profile" element={<Profile 
-          store={props.store}
-          />}/>
-          <Route path="/dialogs" element={<DialogsContainer 
-          store={props.store}
-          />}/>
+         <Route path="/profile" element={<Profile/>}/>
+          <Route path="/dialogs" element={<DialogsContainer/>}/>
           <Route path="/news" element={<News/>}/>
           <Route path="/music" element={<Music/>}/>
           <Route path="/settings" element={<Settings/>}/>
