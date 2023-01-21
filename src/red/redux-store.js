@@ -13,5 +13,6 @@ sidebar: sidebarReducer
 
 
 let store = legacy_createStore(reducers);
+window.store = store;
 
 export default store;
