@@ -10,13 +10,16 @@ export default function ProfileInfo(props){
         <img src="https://zaycafe.ru/wp-content/uploads/2019/05/top-mobile.jpg" alt="rabbit"/>
         </div>
         <div>
-            <img src={props.profile.photos.large}/>
+            <img src={props.profile.photos.large} alt={props.profile.fullName}/>
            
         </div>
         <div>
-           {props.profile.aboutMe} <br></br>
            {props.profile.userId}
-           {props.profile.contacts.vk}
         </div>
+        <div>
+            {props.profile.fullName}
+
+        </div>
+        
     </div>
 }

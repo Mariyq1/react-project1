@@ -1,5 +1,5 @@
 import './App.css';
-import Header from "./Components/Header/Header";
+import HeaderContainer from './Components/Header/HeaderComponent';
 import Navbar from "./Components/Navbar/Navbar";
 import News from "./Components/News/News";
 import ProfileContainer from './Components/Profile/ProfileContainer';
@@ -14,16 +14,19 @@ function App() {
   return (
     <BrowserRouter>
     <div className="App">
-      <Header/>
+      <HeaderContainer/>
       <Navbar/>
      <div className="App-content">
         <Routes>
-         <Route path="/profile/*" element={<ProfileContainer/>}/>
+         
           <Route path="/dialogs" element={<DialogsContainer/>}/>
           <Route path="/users" element ={<UsersContainer/>}/>
           <Route path="/news" element={<News/>}/>
           <Route path="/music" element={<Music/>}/>
           <Route path="/settings" element={<Settings/>}/>
+          
+        <Route path='/profile/:userId'element={<ProfileContainer  />}/>
+      
         </Routes>
       
       </div>
