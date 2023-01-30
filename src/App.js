@@ -25,7 +25,7 @@ function App() {
           <Route path="/music" element={<Music/>}/>
           <Route path="/settings" element={<Settings/>}/>
           
-        <Route path='/profile/:userId'element={<ProfileContainer  />}/>
+        <Route path='/profile'element={<ProfileContainer  />}/>
       
         </Routes>
       
