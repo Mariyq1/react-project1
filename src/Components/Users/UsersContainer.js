@@ -4,6 +4,7 @@ import { unfollow, follow, getUsers,setCurrentPage,
 } from "../../red/users-reducer";
 import Users from './Users';
 import Preloader from "../common/Preloader/Preloader";
+import { AuthRedirect } from "../../hoc/AuthRedirect";
 class UsersContainer extends React.Component {
     
     componentDidMount(){
@@ -41,6 +42,7 @@ let mapStateToProps = (state) => {
 
     }
 }
+let withRedirect = AuthRedirect(UsersContainer);
 
 export default connect (mapStateToProps, {follow,unfollow,setCurrentPage,getUsers
-}) (UsersContainer);
+}) (withRedirect);

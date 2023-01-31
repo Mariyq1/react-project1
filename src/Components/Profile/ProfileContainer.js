@@ -3,7 +3,8 @@ import "./Profile.css";
 import Profile from "./Profile";
 import { connect } from "react-redux";
 import { getUserProfile } from "../../red/profile-reducer";
-import { useParams,useLocation,useNavigate, Navigate } from 'react-router-dom';
+import { AuthRedirect } from "../../hoc/AuthRedirect";
+import { useLocation, useNavigate, useParams } from "react-router";
 
 class ProfileContainer extends React.Component {
     componentDidMount(){
@@ -16,7 +17,7 @@ class ProfileContainer extends React.Component {
 
     }
     render() {
-        if(!this.props.isAuth) return <Navigate to ={"/login"}/>
+        
         return <div className="Profile">
         <Profile {...this.props} profile={this.props.profile}/>
     </div>
@@ -25,23 +26,30 @@ class ProfileContainer extends React.Component {
     
     
 }
+let AuthRedirectComponent = AuthRedirect(ProfileContainer);
+
+
+
 let mapStateToProps = (state) => ({
  profile: state.profilePage.profile,
- isAuth: state.auth.isAuth
+ 
 });
-function withRouter() {
-    function ComponentWithRouterProp(props) {
-        let location = useLocation();
-        let navigate = useNavigate();
-        let params = useParams();
-        return (
-            <ProfileContainer
-                {...props}
-                router={{ location, navigate, params }}
-            />
-        );
-    }
-    return ComponentWithRouterProp;
-}
 
-export default connect(mapStateToProps, {getUserProfile}) ( withRouter(ProfileContainer));
+function withRouter(ProfileContainer) {
+    function ComponentWithRouterProp(props) {
+      let location = useLocation();
+      let navigate = useNavigate();
+      let params = useParams();
+      return (
+        <ProfileContainer
+          {...props}
+          router={{ location, navigate, params }}
+        />
+      );
+    }
+  
+    return ComponentWithRouterProp;
+  }
+let ComponentWithRouterProp = AuthRedirectComponent;
+
+export default connect(mapStateToProps, {getUserProfile}) ( withRouter(ComponentWithRouterProp));
