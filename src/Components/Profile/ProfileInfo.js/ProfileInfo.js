@@ -1,5 +1,6 @@
 import React from "react";
 import Preloader from "../../common/Preloader/Preloader";
+import ProfileStatus from "./ProfileStatus";
 
 export default function ProfileInfo(props){
     if (!props.profile){
@@ -11,15 +12,9 @@ export default function ProfileInfo(props){
         </div>
         <div>
             <img src={props.profile.photos.large} alt={props.profile.fullName}/>
-           
+           <ProfileStatus status={props.statu} updateStatus = {props.updateStatus}/>
         </div>
-        <div>
-           {props.profile.userId}
-        </div>
-        <div>
-            {props.profile.fullName}
-
-        </div>
+       
         
     </div>
 }
