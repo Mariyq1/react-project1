@@ -1,32 +1,41 @@
 import React from "react";
 import MyPost from "./Post/MyPost";
 import classes from "./MyPosts.module.css";
+import { Formik, Field, Form } from "formik";
     
-    export default function MyPosts (props){
+    const MyPosts = (props)=>{
     let myPostsElement = props.posts.map((p,index)=> <MyPost name={p.message} key={index} counts={p.counts}/>);
 
-    let newPostElement = React.createRef();
-    let onAddPost= () =>{
-        props.onAddPost();
-    }
-    let onPostChange = () => {
-        let text = newPostElement.current.value;
-        props.onPostChange(text);
-    }
     return <div className={classes.postsBox}>
-         <div>
-            <h3>My Posts</h3> 
-        </div>
-        <div>
-            <textarea 
-            onChange={onPostChange}
-            ref={newPostElement}
-            value={props.NewPostText}
-            />
-            </div>
-            <div>
-                <button onClick={onAddPost}>Add Post</button>
-            </div>
-        {myPostsElement}        
+                <div>
+                    {myPostsElement}
+                </div>
+                <AddPostForm onAddPost={props.onAddPost}/>
     </div>
 }
+
+    const AddPostForm = (props) =>{
+        return(
+            <Formik initialValues={{message: ""}}
+                onSubmit={(values) => {
+                    props.onAddPost(values.newPostText);
+                }
+                }>
+            {() => (
+                <Form>
+                    <div>
+                        <Field component={'textarea'}
+                               name={'newPostText'}
+                               placeholder={'Enter your post'}/>
+                    </div>
+
+                    <div>
+                        <button type={'submit'}>Send</button>
+                    </div>
+                </Form>
+            )}
+        </Formik>
+        )
+    }
+
+export default MyPosts;

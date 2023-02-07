@@ -11,7 +11,6 @@ const Dialogs = (props) => {
     let state = props.messagesPage;
     let dialogsElements = state.dialogs.map (d => <DialogItem name={d.name} key={d.id} id={d.id}/>);
     let messagesElements = state.messages.map (m => <Messages message={m.message} key={m.id} id={m.id}/>);
-    let newMessageText = state.newMessageText;
   
     
     if (props.isAuth === false) {
