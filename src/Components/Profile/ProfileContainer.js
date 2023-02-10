@@ -1,61 +1,107 @@
 import React from "react";
-import "./Profile.css";
 import Profile from "./Profile";
-import { connect } from "react-redux";
-import { getUserProfile, getStatus,updateStatus } from "../../red/profile-reducer";
-import { useLocation, useNavigate, useParams } from "react-router";
-import { compose } from "redux";
+import {connect} from "react-redux";
+import { getStatus, getUserProfile, updateStatus } from "../../red/profile-reducer";
+import {useLocation, useNavigate, useParams} from "react-router-dom";
+import {compose} from "redux";
+import {Navigate} from "react-router-dom";
+
 
 class ProfileContainer extends React.Component {
-    componentDidMount(){
-        let userId=  this.props.router.params.userId;
-        if(!userId){
-            userId=27688;
-        }
-        this.props.getUserProfile(userId);
-        this.props.getStatus(userId);
-        
+   constructor(props) {
+      super( props );
+      this.state = {
+         isShowMyProfile: true
+      }
+   }
 
-    }
-    render() {
-        
-        return <div className="Profile">
-        <Profile {...this.props} profile={this.props.profile} 
-        status={this.props.status}
-        updateStatus={this.props.updateStatus}/>
-    </div>
 
-    }
-    
-    
+   componentDidMount() {
+
+      let userIdFromPath = +this.props.router.params.userId;
+      let authorisedUserId = this.props.authorisedUserId;
+
+      if (userIdFromPath) {
+
+         this.props.getUserProfile( userIdFromPath );
+         this.props.getStatus( userIdFromPath );
+
+      } else {
+
+         if (this.props.isAuth) {
+            this.props.getUserProfile( authorisedUserId );
+            this.props.getStatus( authorisedUserId );
+         }
+      }
+   }
+
+   componentDidUpdate(prevProps, prevState, snapshot) {
+
+      let userIdFromPath = +this.props.router.params.userId;
+      let authorisedUserId = this.props.authorisedUserId;
+      let isShowMyProfile = this.state.isShowMyProfile;
+
+      if (isShowMyProfile) {
+
+         if (userIdFromPath === authorisedUserId) {
+            this.setState( {isShowMyProfile: false} )
+         }
+
+         if (!userIdFromPath && this.props.isAuth) {
+            this.props.getUserProfile( authorisedUserId );
+            this.props.getStatus( authorisedUserId );
+            this.setState( {isShowMyProfile: false} )
+         }
+      }
+   }
+
+   render() {
+
+      if (!this.props.isAuth && !this.props.router.params.userId) {
+         return <Navigate to={'/login'} />
+      }
+      
+      return (
+         <div>
+            <Profile {...this.props}
+                     profile={this.props.profile}
+                     status={this.props.status}
+                     updateStatus={this.props.updateStatus}
+            />
+         </div>
+      )
+   }
 }
 
 
 
-let mapStateToProps = (state) => ({
- profile: state.profilePage.profile,
- status: state.profilePage.status
- 
-});
+function withRouter(Component) {
 
-
-  export default compose(
-    connect(mapStateToProps, {getUserProfile, getStatus, updateStatus}),
-    function withRouter(ProfileContainer) {
-    function ComponentWithRouterProp(props) {
+   function ComponentWithRouterProp(props) {
       let location = useLocation();
       let navigate = useNavigate();
       let params = useParams();
-      return (
-        <ProfileContainer
-          {...props}
-          router={{ location, navigate, params }}
-        />
-      );
-    }
-  
-    return ComponentWithRouterProp;
-  }
-  )(ProfileContainer)
 
-  
+      return <Component
+         {...props}
+         router={{location, navigate, params}} />;
+   }
+
+   return ComponentWithRouterProp;
+}
+
+
+let mapStateToProps = (state) => ({
+   profile: state.profilePage.profile,
+   status: state.profilePage.status,
+   authorisedUserId: state.auth.id,
+   isAuth: state.auth.isAuth
+})
+
+
+const ProfileContainerCompose = compose(
+   withRouter,
+   connect( mapStateToProps, {getUserProfile, getStatus, updateStatus} )
+)( ProfileContainer );
+
+export default ProfileContainerCompose;
