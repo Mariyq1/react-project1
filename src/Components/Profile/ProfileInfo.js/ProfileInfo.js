@@ -1,6 +1,6 @@
 import React from "react";
 import Preloader from "../../common/Preloader/Preloader";
-import ProfileStatus from "./ProfileStatus";
+import ProfileStatusWithHooks from "./ProfileStatusWithHooks";
 
 export default function ProfileInfo(props){
     if (!props.profile){
@@ -12,7 +12,7 @@ export default function ProfileInfo(props){
         </div>
         <div>
             <img src={props.profile.photos.large} alt={props.profile.fullName}/>
-           <ProfileStatus status={props.statu} updateStatus = {props.updateStatus}/>
+           <ProfileStatusWithHooks status={props.status} updateStatus = {props.updateStatus}/>
         </div>
        
         
