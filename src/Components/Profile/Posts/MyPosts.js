@@ -2,9 +2,10 @@ import React from "react";
 import MyPost from "./Post/MyPost";
 import classes from "./MyPosts.module.css";
 import { Formik, Field, Form } from "formik";
-    
-    const MyPosts = (props)=>{
+   
+    const MyPosts = React.memo(props =>{
     let myPostsElement = props.posts.map((p,index)=> <MyPost name={p.message} key={index} counts={p.counts}/>);
+
 
     return <div className={classes.postsBox}>
                 <div>
@@ -12,7 +13,8 @@ import { Formik, Field, Form } from "formik";
                 </div>
                 <AddPostForm onAddPost={props.onAddPost}/>
     </div>
-}
+})
+
 
     const AddPostForm = (props) =>{
         return(
@@ -29,6 +31,7 @@ import { Formik, Field, Form } from "formik";
                                placeholder={'Enter your post'}/>
                     </div>
 
+
                     <div>
                         <button type={'submit'}>Send</button>
                     </div>
@@ -37,5 +40,6 @@ import { Formik, Field, Form } from "formik";
         </Formik>
         )
     }
+
 
 export default MyPosts;

@@ -38,7 +38,7 @@ class App extends Component {
           <Route path="/music" element={<Music/>}/>
           <Route path="/settings" element={<Settings/>}/>
           
-       <Route path='/profile/:userId'
+          <Route path='/profile/:userId'
              element={<ProfileContainer  />}/>
              <Route path='/profile' element={<ProfileContainer/>}/>
        
