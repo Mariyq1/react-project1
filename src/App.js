@@ -1,4 +1,5 @@
 import React, {Component, Suspense, lazy } from 'react';
+import { Navigate } from 'react-router-dom';
 import './App.css';
 import HeaderContainer from './Components/Header/HeaderContainer';
 import Navbar from "./Components/Navbar/Navbar";
@@ -13,6 +14,7 @@ import { connect } from 'react-redux';
 import { initializeApp } from './red/app-reducer';
 import Preloader from './Components/common/Preloader/Preloader';
 const DialogsContainer = lazy(() => import("./Components/Dialogs/DialogsContainer"));
+
 
 class App extends Component {
   componentDidMount(){
@@ -41,7 +43,10 @@ class App extends Component {
           <Route path='/profile/:userId'
              element={<ProfileContainer  />}/>
              <Route path='/profile' element={<ProfileContainer/>}/>
-       
+        
+    
+
+        
         <Route path='/login'element={<Login />}/>
         </Routes>
         </Suspense>

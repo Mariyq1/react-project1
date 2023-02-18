@@ -5,17 +5,24 @@ import userPhoto from "../../../Images/userPhoto.png";
 import classes from './ProfileInfo.module.css'
 import ProfileDataForm from "./ProfileDataForm";
 
-export default function ProfileInfo({profile,status,updateStatus}){
+export default function ProfileInfo({profile,status,updateStatus, saveProfile}){
     let [editMode, setEditMode] = useState(false);
     if (!profile){
         return <Preloader/>
+    }
+    const onSubmit = (formData) =>{
+        saveProfile(formData);
+        setEditMode(false);
     }
     return<div className={classes.Profile}>
         <div>
             <img src={profile.photos.large || userPhoto} 
             alt={profile.fullName}
             className={classes.mainPhoto}/>
-            {editMode ? <ProfileDataForm profile={profile}/>: 
+            {editMode ? <ProfileDataForm 
+            profile={profile}
+            onSubmit={onSubmit}
+            />: 
             <ProfileData profile={profile}
             goToEditMode={()=>{setEditMode(true)}}
             />}

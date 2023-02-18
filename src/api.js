@@ -59,7 +59,10 @@ export const profileAPI = {
     },
     updateStatus(status) {
     return instance.put(`profile/status`, { status: status }).then((response) => response.data);
-  }
+  },
+    saveProfile(profile) {
+        return instance.put(`profile`, profile)
+    }
 
 
 }

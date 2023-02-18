@@ -1,13 +1,18 @@
 import React from "react";
 import {Formik, Form, Field} from 'formik';
+import classes from './ProfileInfo.module.css'
 
 
-const ProfileDataForm = ({profile}) =>{
+const ProfileDataForm = ({profile, onSubmit}) =>{
     return <Formik
-        initialValues={{ fullName: '', password: '' }}
+        initialValues={{ fullName: '', lokingForAjob: '', mySkills: '', aboutMe: '' }}
+        onSubmit={(values) => {
+                    onSubmit(values.fullName, values.lokingForAjob, 
+                        values.mySkills, values.aboutMe);
+                }}
         >
         <Form>
-            <button onClick={() => { } }>
+            <button type='submit'>
                     Submit
                 </button>
             <div>
@@ -22,18 +27,21 @@ const ProfileDataForm = ({profile}) =>{
            
                 <div>
                     <b>My skills:</b> <br></br>
-                    <Field type='textarea' name='mySkills' placeholder='My skills' />
+                    <Field type='mySkills' name='mySkills' placeholder='My skills' />
                 </div>
             <div>
                 <b>About me:</b> <br></br>
-                <Field type='textarea' name='aboutMe' placeholder='About me' />
+                <Field type='aboutMe' name='aboutMe' placeholder='About me' />
             </div>
             <div>
-                {/* <b>Contacts:</b>{Object.keys(profile.contacts).map(key => {
-                    return <Contact contactTitle={key}
-                        contactValue={profile.contacts[key]}
-                        key={key} />;
-                })} */}
+                <b>Contacts:</b>{Object.keys(profile.contacts).map(key => {
+                    return <div className={classes.Contact}>
+                        <b>{key}:
+                        <Field type='contacts. + key' name='contacts' placeholder= 'key' />
+                
+                        </b>
+                        </div>
+                })}
             </div>
         </Form>
     </Formik>;
