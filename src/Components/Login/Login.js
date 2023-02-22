@@ -4,7 +4,7 @@ import * as Yup from 'yup';
 import classes from './Login.module.css';
 import {connect} from "react-redux";
 import {Navigate} from 'react-router-dom';
-import { login } from '../../red/auth-reducer';
+import {login} from "../../red/auth-reducer";
 
 const validateLoginForm = values => {
     const errors = {};

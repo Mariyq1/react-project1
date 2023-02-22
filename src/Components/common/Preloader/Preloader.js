@@ -1,9 +1,8 @@
 import loader from "../../../Images/loader.gif";
 import React from "react";
 
-let Preloader = (props) => {
+export default function Preloader (props) {
     return <div>
         <img src={loader} alt="loader"/>
     </div>
 }
-export default Preloader;

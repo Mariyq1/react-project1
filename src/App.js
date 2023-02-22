@@ -1,18 +1,16 @@
 import React, {Component, Suspense, lazy } from 'react';
-import { Navigate } from 'react-router-dom';
 import './App.css';
-import HeaderContainer from './Components/Header/HeaderContainer';
 import Navbar from "./Components/Navbar/Navbar";
-import News from "./Components/News/News";
 import ProfileContainer from './Components/Profile/ProfileContainer';
 import Music from "./Components/Music/Music";
 import Settings from "./Components/Settings/Settings";
-import UsersContainer from './Components/Users/UsersContainer';
+import UsersContainer from './Components/Users/UsersContainer.tsx';
 import { Routes, Route, BrowserRouter } from 'react-router-dom';
 import Login from './Components/Login/Login';
 import { connect } from 'react-redux';
 import { initializeApp } from './red/app-reducer';
 import Preloader from './Components/common/Preloader/Preloader';
+import HeaderContainer from './Components/Header/HeaderContainer';
 const DialogsContainer = lazy(() => import("./Components/Dialogs/DialogsContainer"));
 
 
@@ -22,7 +20,7 @@ class App extends Component {
     }
   render(){
     if(!this.props.inisialized){
-       return <Preloader/>
+       return<Preloader/>
     }
   
   return (
@@ -35,18 +33,13 @@ class App extends Component {
         <Routes>
          
           <Route path="/dialogs" element={<DialogsContainer/>}/>
-          <Route path="/users" element ={<UsersContainer/>}/>
-          <Route path="/news" element={<News/>}/>
+          <Route path="/users" element ={<UsersContainer pageTitle={"Hello"}/>}/>
           <Route path="/music" element={<Music/>}/>
           <Route path="/settings" element={<Settings/>}/>
           
           <Route path='/profile/:userId'
              element={<ProfileContainer  />}/>
-             <Route path='/profile' element={<ProfileContainer/>}/>
-        
-    
-
-        
+             <Route path='/profile' element={<ProfileContainer/>}/>      
         <Route path='/login'element={<Login />}/>
         </Routes>
         </Suspense>

@@ -7,7 +7,6 @@ import { compose } from "redux";
 let mapStateToProps = (state) => {
     return {
         messagesPage: state.messagesPage,
-        
     }
 }
 let mapDispatchToProps = (dispatch) => {

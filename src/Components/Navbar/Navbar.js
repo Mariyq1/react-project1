@@ -18,9 +18,6 @@ export default function Navbar(){
           <div className={classes.item}>
           <NavLink to="/users" className = {setActive }>Users</NavLink>
           </div>
-        <div className={classes.item}>
-          <NavLink to ="/news" className = {setActive }>News</NavLink>
-          </div>
           <div className={classes.item}>
           <NavLink to="/music" className = {setActive }>Music</NavLink>
           </div>
