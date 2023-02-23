@@ -1,6 +1,9 @@
+import { ThunkAction } from "redux-thunk";
 import { usersAPI } from "../api";
 import {  UserType } from "../types/types";
 import { updateObjectInArray } from "./object-helpers";
+import { AppStateType } from "./redux-store";
+import { Dispatch } from "react";
 
 const FOLLOW = 'FOLLOW';
 const UNFOLLOW = 'UNFOLLOW';
@@ -9,8 +12,6 @@ const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE';
 const SET_TOTAL_USERS_COUNT = 'SET_TOTAL_USERS_COUNT';
 const TOGGLE_IS_FETCHING = 'TOGGLE_IS_FETCHING';
 const TOGGLE_IS_FOLLOWING_PROGRESS = 'TOGGLE_IS_FOLLOWING_PROGRESS';
-
-
 
 let initialState = {
     users: [ ] as Array <UserType>,
@@ -22,7 +23,7 @@ let initialState = {
 };
 type InitialState = typeof initialState;
 
-const usersReducer = (state = initialState, action:any):InitialState => {
+const usersReducer = (state = initialState, action:ActionsTypes):InitialState => {
     switch(action.type) {
         case FOLLOW:
             return {
@@ -48,7 +49,7 @@ const usersReducer = (state = initialState, action:any):InitialState => {
         }
         case TOGGLE_IS_FOLLOWING_PROGRESS: {
             return{...state, 
-                followingInProgress: action.isFetchng ? 
+                followingInProgress: action.isFetching ? 
                 [...state.followingInProgress, action.userId]
                 :state.followingInProgress.filter(id => id!== action.userId)
             }
@@ -57,6 +58,9 @@ const usersReducer = (state = initialState, action:any):InitialState => {
             return state;
     }
 }
+type ActionsTypes = FollowSuccessType | UnfollowSuccessType | SetUsersType |
+SetCurrentPageType | SetTotalUsersCountType | ToggleIsFetchingType |
+ToggleFollowingProgressType
 
 
 export const followSuccess = (userId:number):FollowSuccessType => ({type: FOLLOW, userId })
@@ -84,11 +88,10 @@ type SetTotalUsersCountType = {
     type: typeof SET_TOTAL_USERS_COUNT
     count: number
 }
-export const toggleIsFetching = (isFetching:boolean):ToggleIsFetchingType =>({type: TOGGLE_IS_FETCHING, count:isFetching})
+export const toggleIsFetching = (isFetching:boolean):ToggleIsFetchingType =>({type: TOGGLE_IS_FETCHING, isFetching})
 type ToggleIsFetchingType = {
     type: typeof TOGGLE_IS_FETCHING
-    count: boolean
-
+    isFetching: boolean
 }
 export const toggleFollowingProgress = (isFetching:boolean, userId:number):ToggleFollowingProgressType =>
 ({type: TOGGLE_IS_FOLLOWING_PROGRESS, isFetching, userId})
@@ -96,10 +99,11 @@ type ToggleFollowingProgressType = {
     type: typeof TOGGLE_IS_FOLLOWING_PROGRESS
     isFetching: boolean
     userId: number
-
 }
-export const requestUsers = (page:number, pageSize:number) =>{
-    return async (dispatch:any) => {
+type DispatchType = Dispatch<ActionsTypes>
+type ThunkType = ThunkAction<Promise<void>, AppStateType, unknown, ActionsTypes>
+export const requestUsers = (page:number, pageSize:number):ThunkType =>{
+    return async (dispatch, getState) => {
     dispatch(toggleIsFetching(true));
     dispatch(setCurrentPage(page));
     let data= await usersAPI.getUsers(page, pageSize)
@@ -109,7 +113,9 @@ export const requestUsers = (page:number, pageSize:number) =>{
         }
 }
 
-const followUnfollowFlow = async (dispatch:any,userId:number,apiMethod:any,actionCreator:any) => {
+const followUnfollowFlow = async (dispatch:DispatchType,userId:number,apiMethod:any,
+    actionCreator:(userId: number) => FollowSuccessType | UnfollowSuccessType
+    ) => {
     dispatch(toggleFollowingProgress(true, userId));
     let response = await apiMethod(userId)
         if(response.data.resultCode === 0){
@@ -120,15 +126,15 @@ const followUnfollowFlow = async (dispatch:any,userId:number,apiMethod:any,actio
 
 
 
-export const follow = (userId:number) => {
-    return async (dispatch:any) => {
+export const follow = (userId:number):ThunkType => {
+    return async (dispatch) => {
         followUnfollowFlow(dispatch,userId,usersAPI.follow.bind(usersAPI),
         followSuccess);
   
     }
 }
-export const unfollow = (userId:number) => {
-    return async (dispatch:any) => {
+export const unfollow = (userId:number):ThunkType => {
+    return async (dispatch) => {
         followUnfollowFlow(dispatch,userId,usersAPI.unfollow.bind(usersAPI),
         unfollowSuccess);
     }
